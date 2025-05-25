@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Luis IA - Tu Asistente Virtual Inteligente</title>
+    
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
+</head>
+<body>
+    <div class="container-fluid h-100">
+        <div class="row h-100">
+            <!-- Header -->
+            <div class="col-12 p-0">
+                <nav class="navbar navbar-expand-lg">
+                    <div class="container-fluid">
+                        <div class="navbar-brand">
+                            <div class="brand-container">
+                                <div class="brand-icon">
+                                    <i class="fas fa-robot"></i>
+                                </div>
+                                <div class="brand-text">
+                                    <h1 class="brand-title">Luis IA</h1>
+                                    <p class="brand-subtitle">Tu Asistente Virtual Inteligente</p>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="navbar-nav ms-auto">
+                            <button class="btn btn-outline-primary" id="newChatBtn">
+                                <i class="fas fa-plus me-2"></i>Nueva Conversación
+                            </button>
+                        </div>
+                    </div>
+                </nav>
+            </div>
+            
+            <!-- Chat Container -->
+            <div class="col-12 flex-fill d-flex flex-column">
+                <div class="chat-container">
+                    <!-- Welcome Message -->
+                    <div class="welcome-message" id="welcomeMessage">
+                        <div class="welcome-content">
+                            <div class="welcome-icon">
+                                <i class="fas fa-robot"></i>
+                            </div>
+                            <h2 class="welcome-title">¡Hola! Soy Luis IA</h2>
+                            <p class="welcome-description">
+                                Soy tu asistente virtual inteligente, aquí para ayudarte con cualquier pregunta o tarea que tengas.
+                                ¡Empecemos a conversar!
+                            </p>
+                            <div class="welcome-suggestions">
+                                <div class="suggestion-card" data-message="¿Qué puedes hacer por mí?">
+                                    <i class="fas fa-question-circle"></i>
+                                    <span>¿Qué puedes hacer?</span>
+                                </div>
+                                <div class="suggestion-card" data-message="Explícame sobre inteligencia artificial">
+                                    <i class="fas fa-brain"></i>
+                                    <span>Sobre IA</span>
+                                </div>
+                                <div class="suggestion-card" data-message="Ayúdame con un proyecto">
+                                    <i class="fas fa-project-diagram"></i>
+                                    <span>Ayuda con proyectos</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Chat Messages -->
+                    <div class="chat-messages" id="chatMessages">
+                        <!-- Messages will be dynamically added here -->
+                    </div>
+                </div>
+                
+                <!-- Chat Input -->
+                <div class="chat-input-container">
+                    <div class="container">
+                        <div class="chat-input-wrapper">
+                            <div class="input-group">
+                                <input type="text" 
+                                       class="form-control chat-input" 
+                                       id="messageInput" 
+                                       placeholder="Escribe tu mensaje aquí..." 
+                                       autocomplete="off">
+                                <button class="btn btn-primary send-btn" id="sendBtn" type="button">
+                                    <i class="fas fa-paper-plane"></i>
+                                </button>
+                            </div>
+                            <div class="input-status" id="inputStatus">
+                                <i class="fas fa-circle status-indicator"></i>
+                                <span class="status-text">Listo para conversar</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Loading Indicator -->
+    <div class="loading-overlay" id="loadingOverlay">
+        <div class="loading-spinner">
+            <div class="spinner-border text-primary" role="status">
+                <span class="visually-hidden">Cargando...</span>
+            </div>
+            <p class="loading-text">Luis IA está pensando...</p>
+        </div>
+    </div>
+    
+    <!-- Bootstrap JS -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    
+    <!-- Custom JavaScript -->
+    <script src="{{ url_for('static', filename='script.js') }}"></script>
+</body>
+</html>

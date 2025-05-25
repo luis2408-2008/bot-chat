@@ -1,0 +1,21 @@
+services:
+  - type: web
+    name: luis-ia
+    runtime: python
+    buildCommand: pip install flask flask-sqlalchemy google-generativeai python-dotenv gunicorn psycopg2-binary werkzeug
+    startCommand: gunicorn --bind 0.0.0.0:$PORT main:app
+    envVars:
+      - key: SESSION_SECRET
+        value: luisai-super-secret-key-2024-render
+      - key: GEMINI_API_KEY
+        value: AIzaSyDoPUP3jjdE_7qQM7ZUNFhPVfPqSlscIzw
+      - key: DATABASE_URL
+        value: postgresql://ia_sshg_user:2vzQmBYML3GTSBD8iV45Je7qwuZk9W5n@dpg-d0pj99gdl3ps73aroen0-a/ia_sshg
+      - key: FLASK_ENV
+        value: production
+      - key: FLASK_DEBUG
+        value: False
+      - key: LOG_LEVEL
+        value: INFO
+      - key: PYTHON_VERSION
+        value: 3.11.0
