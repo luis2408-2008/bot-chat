@@ -18,13 +18,15 @@ class ChatMessage(db.Model):
         }
 
 class ChatSession(db.Model):
-    id = db.Column(db.String(255), primary_key=True)
+    id = db.Column(db.Integer, primary_key=True, autoincrement=True)
+    session_uuid = db.Column(db.String(255), nullable=False, unique=True, index=True)
     created_at = db.Column(db.DateTime, default=datetime.utcnow)
     last_activity = db.Column(db.DateTime, default=datetime.utcnow)
     
     def to_dict(self):
         return {
             'id': self.id,
+            'session_uuid': self.session_uuid,
             'created_at': self.created_at.isoformat(),
             'last_activity': self.last_activity.isoformat()
         }

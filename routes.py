@@ -37,30 +37,30 @@ def chat():
             return jsonify({'error': 'El mensaje no puede estar vacío'}), 400
         
         # Get or create session ID
-        session_id = session.get('session_id')
-        if not session_id:
-            session_id = str(uuid.uuid4())
-            session['session_id'] = session_id
+        session_uuid = session.get('session_uuid')
+        if not session_uuid:
+            session_uuid = str(uuid.uuid4())
+            session['session_uuid'] = session_uuid
             
             # Create new chat session
-            chat_session = ChatSession(id=session_id)
+            chat_session = ChatSession(session_uuid=session_uuid)
             db.session.add(chat_session)
         else:
             # Update last activity
-            chat_session = ChatSession.query.get(session_id)
+            chat_session = ChatSession.query.filter_by(session_uuid=session_uuid).first()
             if chat_session:
                 chat_session.last_activity = datetime.utcnow()
         
         # Save user message
         user_msg = ChatMessage(
-            session_id=session_id,
+            session_id=session_uuid,
             message_type='user',
             content=user_message
         )
         db.session.add(user_msg)
         
         # Get chat history for context
-        recent_messages = ChatMessage.query.filter_by(session_id=session_id)\
+        recent_messages = ChatMessage.query.filter_by(session_id=session_uuid)\
                                           .order_by(ChatMessage.timestamp.desc())\
                                           .limit(10).all()
         
@@ -84,7 +84,7 @@ def chat():
         
         # Save AI response
         ai_msg = ChatMessage(
-            session_id=session_id,
+            session_id=session_uuid,
             message_type='assistant',
             content=ai_response
         )
@@ -95,7 +95,7 @@ def chat():
         
         return jsonify({
             'response': ai_response,
-            'session_id': session_id
+            'session_id': session_uuid
         })
         
     except Exception as e:
@@ -109,11 +109,11 @@ def chat():
 def get_chat_history():
     """Get chat history for current session"""
     try:
-        session_id = session.get('session_id')
-        if not session_id:
+        session_uuid = session.get('session_uuid')
+        if not session_uuid:
             return jsonify({'messages': []})
         
-        messages = ChatMessage.query.filter_by(session_id=session_id)\
+        messages = ChatMessage.query.filter_by(session_id=session_uuid)\
                                    .order_by(ChatMessage.timestamp.asc()).all()
         
         return jsonify({
@@ -129,7 +129,7 @@ def new_session():
     """Start a new chat session"""
     try:
         # Clear current session
-        session.pop('session_id', None)
+        session.pop('session_uuid', None)
         
         return jsonify({'message': 'Nueva sesión iniciada'})
         
