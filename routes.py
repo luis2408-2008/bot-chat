@@ -11,7 +11,7 @@ from models import ChatMessage, ChatSession
 genai.configure(api_key=os.getenv("GEMINI_API_KEY"))
 
 # Initialize the model
-model = genai.GenerativeModel('gemini-2.0-flash-exp')
+model = genai.GenerativeModel('gemini-2.0-flash')
 
 # Luis IA personality prompt
 LUIS_PERSONALITY = """
